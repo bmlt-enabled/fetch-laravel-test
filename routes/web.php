@@ -15,8 +15,20 @@ Route::get('/', function () {
 Route::get('/jft', function () {
     $settings = new JFTSettings(JFTLanguage::English);
     $jft = JFT::getInstance($settings);
-    $meditation = $jft->fetch();
-    return response()->json($meditation);
+    $data = $jft->fetch();
+    $parts = collect([
+        $data->date,
+        $data->title,
+        $data->page,
+        $data->quote,
+        $data->source,
+        ...collect($data->content)->map(fn($p) => strip_tags(html_entity_decode($p))),
+        $data->thought,
+        $data->copyright
+    ])
+        ->filter(fn($part) => !empty(trim($part)))
+        ->values();
+    return $parts->join('<br /><br />');
 });
 
 Route::get('/spad', function () {
