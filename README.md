@@ -1,5 +1,13 @@
 # Fetch Laravel Test
 
+### Created with
+```shell
+composer create-project --prefer-dist laravel/laravel fetch-laravel-test
+composer require bmlt/fetch-meditation
+```
+
+### Running
+
 ```sh
 composer install
 php artisan serve
