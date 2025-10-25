@@ -207,7 +207,33 @@ class MeditationController extends Controller
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Today's JFT meditation in the specified language"
+                description: "Today's JFT meditation in the specified language",
+                content: [
+                    new OA\MediaType(
+                        mediaType: "application/json",
+                        schema: new OA\Schema(
+                            properties: [
+                                new OA\Property(property: "date", type: "string", example: "October 25"),
+                                new OA\Property(property: "title", type: "string", example: "Meditation Title"),
+                                new OA\Property(property: "page", type: "string", example: "Page 299"),
+                                new OA\Property(property: "quote", type: "string", example: "Opening quote"),
+                                new OA\Property(property: "source", type: "string", example: "Quote source"),
+                                new OA\Property(
+                                    property: "content",
+                                    type: "array",
+                                    items: new OA\Items(type: "string")
+                                ),
+                                new OA\Property(property: "thought", type: "string", example: "Just for today..."),
+                                new OA\Property(property: "copyright", type: "string")
+                            ],
+                            type: "object"
+                        )
+                    ),
+                    new OA\MediaType(
+                        mediaType: "text/html",
+                        schema: new OA\Schema(type: "string")
+                    )
+                ]
             ),
             new OA\Response(
                 response: 404,
@@ -303,7 +329,29 @@ class MeditationController extends Controller
         responses: [
             new OA\Response(
                 response: 200,
-                description: "Today's SPAD meditation in the specified language"
+                description: "Today's SPAD meditation in the specified language",
+                content: [
+                    new OA\MediaType(
+                        mediaType: "application/json",
+                        schema: new OA\Schema(
+                            properties: [
+                                new OA\Property(property: "date", type: "string", example: "October 25"),
+                                new OA\Property(property: "title", type: "string", example: "Principle Title"),
+                                new OA\Property(
+                                    property: "content",
+                                    type: "array",
+                                    items: new OA\Items(type: "string")
+                                ),
+                                new OA\Property(property: "copyright", type: "string")
+                            ],
+                            type: "object"
+                        )
+                    ),
+                    new OA\MediaType(
+                        mediaType: "text/html",
+                        schema: new OA\Schema(type: "string")
+                    )
+                ]
             ),
             new OA\Response(
                 response: 404,

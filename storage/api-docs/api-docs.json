@@ -172,7 +172,54 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Today's JFT meditation in the specified language"
+                        "description": "Today's JFT meditation in the specified language",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "date": {
+                                            "type": "string",
+                                            "example": "October 25"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Meditation Title"
+                                        },
+                                        "page": {
+                                            "type": "string",
+                                            "example": "Page 299"
+                                        },
+                                        "quote": {
+                                            "type": "string",
+                                            "example": "Opening quote"
+                                        },
+                                        "source": {
+                                            "type": "string",
+                                            "example": "Quote source"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "thought": {
+                                            "type": "string",
+                                            "example": "Just for today..."
+                                        },
+                                        "copyright": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Language not supported"
@@ -249,7 +296,38 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Today's SPAD meditation in the specified language"
+                        "description": "Today's SPAD meditation in the specified language",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "date": {
+                                            "type": "string",
+                                            "example": "October 25"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Principle Title"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "copyright": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Language not supported"
