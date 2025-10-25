@@ -40,7 +40,8 @@ Route::get('/', function () {
                 'german' => 'German',
                 'italian' => 'Italian',
                 'japanese' => 'Japanese',
-                'portuguese' => 'Portuguese',
+                'portuguese' => 'Portuguese (BR)',
+                'portuguese-pt' => 'Portuguese (PT)',
                 'russian' => 'Russian',
                 'swedish' => 'Swedish',
             ],
@@ -55,7 +56,7 @@ Route::get('/', function () {
             'base_url' => '/spad'
         ]
     ];
-    
+
     if (request()->wantsJson() || request()->query('json')) {
         return response()->json($availableBooks);
     }
@@ -69,7 +70,7 @@ Route::get('/', function () {
         }
         $html .= "</ul>";
     }
-    
+
     return $html;
 });
 
@@ -89,6 +90,7 @@ Route::get('/jft/{language}', function ($language) {
         'italian' => JFTLanguage::Italian,
         'japanese' => JFTLanguage::Japanese,
         'portuguese' => JFTLanguage::Portuguese,
+        'portuguese-pt' => JFTLanguage::PortuguesePT,
         'russian' => JFTLanguage::Russian,
         'swedish' => JFTLanguage::Swedish,
     ];
@@ -101,7 +103,7 @@ Route::get('/jft/{language}', function ($language) {
     $settings = new JFTSettings($langMap[$language]);
     $jft = JFT::getInstance($settings);
     $data = $jft->fetch();
-    
+
     return formatMeditation($data, request()->query('json'));
 });
 
@@ -109,7 +111,7 @@ Route::get('/spad', function () {
     $settings = new SPADSettings(SPADLanguage::English);
     $spad = SPAD::getInstance($settings);
     $meditation = $spad->fetch();
-    
+
     return formatMeditation($meditation, request()->query('json'));
 });
 
@@ -127,6 +129,6 @@ Route::get('/spad/{language}', function ($language) {
     $settings = new SPADSettings($langMap[$language]);
     $spad = SPAD::getInstance($settings);
     $meditation = $spad->fetch();
-    
+
     return formatMeditation($meditation, request()->query('json'));
 });
