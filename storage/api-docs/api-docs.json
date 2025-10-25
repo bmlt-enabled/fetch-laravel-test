@@ -7,6 +7,10 @@
     },
     "servers": [
         {
+            "url": "https://fetch-laravel-test-main-bh3tju.laravel.cloud",
+            "description": "Laravel Cloud production server"
+        },
+        {
             "url": "http://127.0.0.1:8000",
             "description": "Local development server"
         }
@@ -19,17 +23,6 @@
                 ],
                 "summary": "List available meditation books and languages",
                 "operationId": "6391cc1d33ef60c790a5de5189613947",
-                "parameters": [
-                    {
-                        "name": "json",
-                        "in": "query",
-                        "description": "Return JSON response",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "List of available books and languages",
@@ -93,17 +86,6 @@
                 ],
                 "summary": "Get Just For Today meditation (English)",
                 "operationId": "5f8f24b8e4ea76eee26c9c860bae507a",
-                "parameters": [
-                    {
-                        "name": "json",
-                        "in": "query",
-                        "description": "Return JSON response",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Today's JFT meditation",
@@ -186,15 +168,6 @@
                                 "swedish"
                             ]
                         }
-                    },
-                    {
-                        "name": "json",
-                        "in": "query",
-                        "description": "Return JSON response",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
                     }
                 ],
                 "responses": {
@@ -214,17 +187,6 @@
                 ],
                 "summary": "Get Spiritual Principle A Day meditation (English)",
                 "operationId": "86f1d12fd0a87e4072af12132e576cc8",
-                "parameters": [
-                    {
-                        "name": "json",
-                        "in": "query",
-                        "description": "Return JSON response",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Today's SPAD meditation",
@@ -282,15 +244,6 @@
                                 "english",
                                 "german"
                             ]
-                        }
-                    },
-                    {
-                        "name": "json",
-                        "in": "query",
-                        "description": "Return JSON response",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
                         }
                     }
                 ],

@@ -18,6 +18,10 @@ use OpenApi\Attributes as OA;
     description: "API for fetching daily meditations from Just For Today (JFT) and Spiritual Principle A Day (SPAD) books in multiple languages"
 )]
 #[OA\Server(
+    url: "https://fetch-laravel-test-main-bh3tju.laravel.cloud",
+    description: "Laravel Cloud production server"
+)]
+#[OA\Server(
     url: "http://127.0.0.1:8000",
     description: "Local development server"
 )]
@@ -55,15 +59,6 @@ class MeditationController extends Controller
         path: "/",
         summary: "List available meditation books and languages",
         tags: ["Meditations"],
-        parameters: [
-            new OA\Parameter(
-                name: "json",
-                description: "Return JSON response",
-                in: "query",
-                required: false,
-                schema: new OA\Schema(type: "boolean")
-            )
-        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -152,15 +147,6 @@ class MeditationController extends Controller
         path: "/jft",
         summary: "Get Just For Today meditation (English)",
         tags: ["Meditations"],
-        parameters: [
-            new OA\Parameter(
-                name: "json",
-                description: "Return JSON response",
-                in: "query",
-                required: false,
-                schema: new OA\Schema(type: "boolean")
-            )
-        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -216,13 +202,6 @@ class MeditationController extends Controller
                     type: "string",
                     enum: ["english", "spanish", "french", "german", "italian", "japanese", "portuguese", "portuguese-pt", "russian", "swedish"]
                 )
-            ),
-            new OA\Parameter(
-                name: "json",
-                description: "Return JSON response",
-                in: "query",
-                required: false,
-                schema: new OA\Schema(type: "boolean")
             )
         ],
         responses: [
@@ -267,15 +246,6 @@ class MeditationController extends Controller
         path: "/spad",
         summary: "Get Spiritual Principle A Day meditation (English)",
         tags: ["Meditations"],
-        parameters: [
-            new OA\Parameter(
-                name: "json",
-                description: "Return JSON response",
-                in: "query",
-                required: false,
-                schema: new OA\Schema(type: "boolean")
-            )
-        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -328,13 +298,6 @@ class MeditationController extends Controller
                     type: "string",
                     enum: ["english", "german"]
                 )
-            ),
-            new OA\Parameter(
-                name: "json",
-                description: "Return JSON response",
-                in: "query",
-                required: false,
-                schema: new OA\Schema(type: "boolean")
             )
         ],
         responses: [
