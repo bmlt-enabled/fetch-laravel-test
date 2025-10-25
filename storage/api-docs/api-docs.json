@@ -1,0 +1,314 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Fetch Meditation API",
+        "description": "API for fetching daily meditations from Just For Today (JFT) and Spiritual Principle A Day (SPAD) books in multiple languages",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "Meditations"
+                ],
+                "summary": "List available meditation books and languages",
+                "operationId": "6391cc1d33ef60c790a5de5189613947",
+                "parameters": [
+                    {
+                        "name": "json",
+                        "in": "query",
+                        "description": "Return JSON response",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of available books and languages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "jft": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Just For Today"
+                                                },
+                                                "languages": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "english": "English",
+                                                        "spanish": "Spanish"
+                                                    }
+                                                },
+                                                "base_url": {
+                                                    "type": "string",
+                                                    "example": "/jft"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "spad": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Spiritual Principle A Day"
+                                                },
+                                                "languages": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "english": "English",
+                                                        "german": "German"
+                                                    }
+                                                },
+                                                "base_url": {
+                                                    "type": "string",
+                                                    "example": "/spad"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jft": {
+            "get": {
+                "tags": [
+                    "Meditations"
+                ],
+                "summary": "Get Just For Today meditation (English)",
+                "operationId": "5f8f24b8e4ea76eee26c9c860bae507a",
+                "parameters": [
+                    {
+                        "name": "json",
+                        "in": "query",
+                        "description": "Return JSON response",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Today's JFT meditation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "date": {
+                                            "type": "string",
+                                            "example": "October 25"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Meditation Title"
+                                        },
+                                        "page": {
+                                            "type": "string",
+                                            "example": "Page 299"
+                                        },
+                                        "quote": {
+                                            "type": "string",
+                                            "example": "Opening quote"
+                                        },
+                                        "source": {
+                                            "type": "string",
+                                            "example": "Quote source"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "thought": {
+                                            "type": "string",
+                                            "example": "Just for today..."
+                                        },
+                                        "copyright": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jft/{language}": {
+            "get": {
+                "tags": [
+                    "Meditations"
+                ],
+                "summary": "Get Just For Today meditation in specified language",
+                "operationId": "b20c1b3fd0bb115c7d61f66cb403bdd8",
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "description": "Language code (english, spanish, french, german, italian, japanese, portuguese, portuguese-pt, russian, swedish)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "english",
+                                "spanish",
+                                "french",
+                                "german",
+                                "italian",
+                                "japanese",
+                                "portuguese",
+                                "portuguese-pt",
+                                "russian",
+                                "swedish"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "json",
+                        "in": "query",
+                        "description": "Return JSON response",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Today's JFT meditation in the specified language"
+                    },
+                    "404": {
+                        "description": "Language not supported"
+                    }
+                }
+            }
+        },
+        "/spad": {
+            "get": {
+                "tags": [
+                    "Meditations"
+                ],
+                "summary": "Get Spiritual Principle A Day meditation (English)",
+                "operationId": "86f1d12fd0a87e4072af12132e576cc8",
+                "parameters": [
+                    {
+                        "name": "json",
+                        "in": "query",
+                        "description": "Return JSON response",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Today's SPAD meditation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "date": {
+                                            "type": "string",
+                                            "example": "October 25"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Principle Title"
+                                        },
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "copyright": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/spad/{language}": {
+            "get": {
+                "tags": [
+                    "Meditations"
+                ],
+                "summary": "Get Spiritual Principle A Day meditation in specified language",
+                "operationId": "45f82ed2334f65f02eb50416b7f510c5",
+                "parameters": [
+                    {
+                        "name": "language",
+                        "in": "path",
+                        "description": "Language code (english, german)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "english",
+                                "german"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "json",
+                        "in": "query",
+                        "description": "Return JSON response",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Today's SPAD meditation in the specified language"
+                    },
+                    "404": {
+                        "description": "Language not supported"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Meditations",
+            "description": "Daily meditation content"
+        }
+    ]
+}
