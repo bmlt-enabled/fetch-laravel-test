@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbb0323cd18e105fd3f8bc6f129547ca",
+    "content-hash": "615156a7a483252d71d4e1db7155c1c3",
     "packages": [
         {
             "name": "bmlt/fetch-meditation",
