@@ -377,4 +377,120 @@ class MeditationController extends Controller
 
         return $this->formatMeditation($meditation, $request->query('json'));
     }
+
+    /**
+     * Test all meditation endpoints
+     */
+    public function test(Request $request)
+    {
+        $results = [
+            'timestamp' => now()->toIso8601String(),
+            'jft' => [],
+            'spad' => [],
+        ];
+
+        // Test JFT languages
+        $jftLanguages = ['english', 'spanish', 'french', 'german', 'italian', 'japanese', 'portuguese', 'portuguese-pt', 'russian', 'swedish'];
+        foreach ($jftLanguages as $language) {
+            try {
+                $langMap = [
+                    'english' => \FetchMeditation\JFTLanguage::English,
+                    'spanish' => \FetchMeditation\JFTLanguage::Spanish,
+                    'french' => \FetchMeditation\JFTLanguage::French,
+                    'german' => \FetchMeditation\JFTLanguage::German,
+                    'italian' => \FetchMeditation\JFTLanguage::Italian,
+                    'japanese' => \FetchMeditation\JFTLanguage::Japanese,
+                    'portuguese' => \FetchMeditation\JFTLanguage::Portuguese,
+                    'portuguese-pt' => \FetchMeditation\JFTLanguage::PortuguesePT,
+                    'russian' => \FetchMeditation\JFTLanguage::Russian,
+                    'swedish' => \FetchMeditation\JFTLanguage::Swedish,
+                ];
+                $settings = new \FetchMeditation\JFTSettings($langMap[$language]);
+                $jft = \FetchMeditation\JFT::getInstance($settings);
+                $data = $jft->fetch();
+
+                $results['jft'][$language] = [
+                    'status' => 'success',
+                    'has_content' => !empty($data->content)
+                ];
+            } catch (\Exception $e) {
+                $results['jft'][$language] = [
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ];
+            }
+        }
+
+        // Test SPAD languages
+        $spadLanguages = ['english', 'german'];
+        foreach ($spadLanguages as $language) {
+            try {
+                $langMap = [
+                    'english' => \FetchMeditation\SPADLanguage::English,
+                    'german' => \FetchMeditation\SPADLanguage::German,
+                ];
+                $settings = new \FetchMeditation\SPADSettings($langMap[$language]);
+                $spad = \FetchMeditation\SPAD::getInstance($settings);
+                $data = $spad->fetch();
+
+                $results['spad'][$language] = [
+                    'status' => 'success',
+                    'has_content' => !empty($data->content)
+                ];
+            } catch (\Exception $e) {
+                $results['spad'][$language] = [
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ];
+            }
+        }
+
+        // Count results
+        $jftSuccess = count(array_filter($results['jft'], fn($r) => $r['status'] === 'success'));
+        $spadSuccess = count(array_filter($results['spad'], fn($r) => $r['status'] === 'success'));
+
+        $results['summary'] = [
+            'jft' => "{$jftSuccess}/" . count($jftLanguages) . " passed",
+            'spad' => "{$spadSuccess}/" . count($spadLanguages) . " passed",
+            'total' => ($jftSuccess + $spadSuccess) . "/" . (count($jftLanguages) + count($spadLanguages)) . " passed"
+        ];
+
+        if ($request->wantsJson()) {
+            return response()->json($results);
+        }
+
+        // HTML output
+        $html = '<h1>Meditation API Test Results</h1>';
+        $html .= '<p><strong>Tested at:</strong> ' . $results['timestamp'] . '</p>';
+        $html .= '<h2>Summary</h2>';
+        $html .= '<ul>';
+        $html .= '<li><strong>JFT:</strong> ' . $results['summary']['jft'] . '</li>';
+        $html .= '<li><strong>SPAD:</strong> ' . $results['summary']['spad'] . '</li>';
+        $html .= '<li><strong>Total:</strong> ' . $results['summary']['total'] . '</li>';
+        $html .= '</ul>';
+
+        $html .= '<h2>JFT Results</h2><ul>';
+        foreach ($results['jft'] as $lang => $result) {
+            $status = $result['status'] === 'success' ? '✅' : '❌';
+            $html .= "<li>{$status} <strong>{$lang}</strong>: {$result['status']}";
+            if (isset($result['message'])) {
+                $html .= " - {$result['message']}";
+            }
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+
+        $html .= '<h2>SPAD Results</h2><ul>';
+        foreach ($results['spad'] as $lang => $result) {
+            $status = $result['status'] === 'success' ? '✅' : '❌';
+            $html .= "<li>{$status} <strong>{$lang}</strong>: {$result['status']}";
+            if (isset($result['message'])) {
+                $html .= " - {$result['message']}";
+            }
+            $html .= '</li>';
+        }
+        $html .= '</ul>';
+
+        return $html;
+    }
 }
